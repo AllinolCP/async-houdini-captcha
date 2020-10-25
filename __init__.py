@@ -43,7 +43,6 @@ class Captcha(IPlugin):
 
         ip = p.peer_name[0] + p.server.config.auth_key
         hashed_ip = hashlib.sha3_512(ip.encode()).hexdigest()
-        ip_bans = await IPBan.query.where((IPBan.hashed_ip == hashed_ip)).gino.first()
         flood_key = f'{hashed_ip}.flood'
 
         post_data = {
