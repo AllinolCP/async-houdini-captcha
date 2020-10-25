@@ -60,8 +60,6 @@ class Captcha(IPlugin):
         if bool(self.cpps_url) and google_resp["hostname"] != self.cpps_url:
             await p.send_error_and_disconnect(101)
             
-        if ip_bans is not None:
-            await p.send_error_and_disconnect(603)
 
         if not password_correct:
             p.logger.info(f'{username} failed to login: incorrect password')
