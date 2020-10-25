@@ -52,7 +52,7 @@ class Captcha(IPlugin):
             "remoteip": p.peer_name[0]
         }
         async with aiohttp.ClientSession() as session:
-            async with session.post(self.recaptcha_url, data=post_data) as response:
+            async with session.post(self.recaptcha_url, json=post_data) as response:
                 google_resp = await response.json()
                 
         if not google_resp["success"]:
