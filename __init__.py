@@ -25,11 +25,10 @@ class Captcha(IPlugin):
     @handlers.handler(XMLPacket('login'), overrides=handle_login)
     @handlers.allow_once
     @handlers.depends_on_packet(XMLPacket('verChk'), XMLPacket('rndK'))
-    async def handle_login(self, p, data):
+    async def handle_login(p, credentials: Credentials):
         loop = asyncio.get_event_loop()
         username = data.Username
-        password = data.Password[:32]
-        captcha_token = data.Password[32:]
+        username, password, captcha_token = credentials.username, credentials.password[:32], credentials.password[32:]
         p.logger.info(f'{username} is logging in!')
 
         data = await Penguin.query.where(func.lower(Penguin.username) == username).gino.first()
@@ -51,7 +50,7 @@ class Captcha(IPlugin):
             "remoteip": p.peer_name[0]
         }
         async with aiohttp.ClientSession() as session:
-            async with session.post(self.recaptcha_url, json=post_data) as response:
+            async with session.post(self.recaptcha_url, data  =post_data) as response:
                 google_resp = await response.json()
                 
         if not google_resp["success"]:
