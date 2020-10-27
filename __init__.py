@@ -27,7 +27,6 @@ class Captcha(IPlugin):
     @handlers.depends_on_packet(XMLPacket('verChk'), XMLPacket('rndK'))
     async def handle_login(p, credentials: Credentials):
         loop = asyncio.get_event_loop()
-        username = data.Username
         username, password, captcha_token = credentials.username, credentials.password[:32], credentials.password[32:]
         p.logger.info(f'{username} is logging in!')
 
