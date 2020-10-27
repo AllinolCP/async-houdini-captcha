@@ -15,9 +15,9 @@ class Captcha(IPlugin):
     version = "1.0.0"
     description = "Google recaptcha support in Houdini Asyncio!"
     
-    cpps_url = ''
-    recaptcha_key = ''
-    recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify'
+    cpps_url = '' #cpps domain
+    recaptcha_key = '' #recaptcha secret key
+    recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify' #google verification server
 
     def __init__(self, server):
         super().__init__(server)
